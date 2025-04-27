@@ -12,10 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MeTask"
         tools:targetApi="31">
-        <activity
-            android:name=".LayoutLogin"
-            android:exported="false"
-            android:theme="@style/Theme.MeTask" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
