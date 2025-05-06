@@ -72,6 +72,7 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordTil"
         android:layout_width="0dp"
@@ -94,7 +95,7 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -120,7 +121,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnIngresar"
         android:layout_width="0dp"
         android:layout_height="42dp"
         android:layout_marginStart="16dp"
