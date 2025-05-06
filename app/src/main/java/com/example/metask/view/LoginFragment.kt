@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.metask.R
 import com.example.metask.databinding.FragmentLoginFragmentBinding
 import com.example.metask.utils.FragmentCommunicator
+import com.example.metask.viewModel.LoginViewModel
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.

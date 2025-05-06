@@ -32,11 +32,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02fcfaf7-77a5-48ab-a8fd-7c1e29ff98c7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/metask/viewModel/LoginViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/metask/viewModel/RegisterViewModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/metask/view/LoginFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/metask/view/LoginFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/metask/view/RegisterFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/metask/view/RegisterFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_login_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_login_fragment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_register_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_register_fragment.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +56,7 @@
       <list>
         <option value="Interface" />
         <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>

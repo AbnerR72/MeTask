@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.metask.R
 import com.example.metask.databinding.FragmentRegisterFragmentBinding
 import com.example.metask.utils.FragmentCommunicator
+import com.example.metask.viewModel.RegisterViewModel
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -72,8 +73,6 @@ class RegisterFragment : Fragment() {
             communicator.showLoader(loaderState)
         }
     }
-
-
 
 
     override fun onDestroyView() {
