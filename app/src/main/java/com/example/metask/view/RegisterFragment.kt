@@ -1,4 +1,4 @@
-package com.example.metask
+package com.example.metask.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,14 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.metask.databinding.FragmentLoginFragmentBinding
+import com.example.metask.R
+import com.example.metask.databinding.FragmentRegisterFragmentBinding
 
 /**
- * A simple [Fragment] subclass as the default destination in the navigation.
+ * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class LoginFragment : Fragment() {
+class RegisterFragment : Fragment() {
 
-    private var _binding: FragmentLoginFragmentBinding? = null
+    private var _binding: FragmentRegisterFragmentBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,7 +25,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentLoginFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentRegisterFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -32,8 +33,8 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.textView.setOnClickListener { // Cambia button2 por textViewNavigate
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        binding.button.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
     }
 

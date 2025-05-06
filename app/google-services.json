@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "227374112350",
+    "project_id": "metask-11048",
+    "storage_bucket": "metask-11048.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227374112350:android:abb7fe45d62e67832a5ecf",
+        "android_client_info": {
+          "package_name": "com.example.metask"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCI2wrFmw_ATH2BUfEeC_16EOP5KwYanrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
