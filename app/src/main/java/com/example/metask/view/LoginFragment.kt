@@ -32,6 +32,7 @@ class LoginFragment : Fragment() {
     ): View? {
         communicator = requireActivity() as MainActivity
         _binding = FragmentLoginFragmentBinding.inflate(inflater, container, false)
+        setupObservers()
         setupView()
         return binding.root
     }
@@ -43,7 +44,7 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnIngresar.setOnClickListener {
-            if (isValid) {
+            if (validateInputs()) {
                 requestLogin()
             } else {
                 Toast.makeText(activity, "Inicio de sesión invalido", Toast.LENGTH_SHORT).show()
@@ -69,6 +70,19 @@ class LoginFragment : Fragment() {
                 isValid = true
             }
         }
+        setupObservers()
+    }
+
+    private fun validateInputs(): Boolean {
+        val emailNotEmpty = binding.emailTiet.text.toString().isNotEmpty()
+        val passwordNotEmpty = binding.passwordTiet.text.toString().isNotEmpty()
+
+        isValid = emailNotEmpty && passwordNotEmpty
+
+        binding.emailTil.error = if (!emailNotEmpty) "Introduce un correo" else null
+        binding.passwordTil.error = if (!passwordNotEmpty) "Introduce tu contraseña" else null
+
+        return isValid
     }
 
     private fun setupObservers() {
@@ -77,9 +91,7 @@ class LoginFragment : Fragment() {
         }
         viewModel.sessionValid.observe(viewLifecycleOwner) { validSession ->
             if (validSession) {
-                val intent = Intent(activity, MainActivity::class.java)
-                startActivity(intent)
-                activity?.finish()
+                findNavController().navigate(R.id.action_loginFragment_to_pendingTaskFragment)
             } else {
                 Toast.makeText(activity, "Ingreso invalido", Toast.LENGTH_SHORT).show()
             }

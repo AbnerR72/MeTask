@@ -13,6 +13,7 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.metask.view.LoginFragment"
@@ -20,5 +21,26 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_pendingTaskFragment"
+            app:destination="@id/pendingTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pendingTaskFragment"
+        android:name="com.example.metask.view.PendingTaskFragment"
+        android:label="fragment_pending_task"
+        tools:layout="@layout/fragment_pending_task" >
+        <action
+            android:id="@+id/action_pendingTaskFragment_to_newTaskFragment"
+            app:destination="@id/newTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newTaskFragment"
+        android:name="com.example.metask.view.NewTaskFragment"
+        android:label="fragment_new_task"
+        tools:layout="@layout/fragment_new_task" >
+        <action
+            android:id="@+id/action_newTaskFragment_to_pendingTaskFragment"
+            app:destination="@id/pendingTaskFragment" />
     </fragment>
 </navigation>

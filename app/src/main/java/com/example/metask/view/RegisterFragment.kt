@@ -34,7 +34,8 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setupView() {
-        binding.imageButton3.setOnClickListener {
+        binding.flecha.setOnClickListener {
+
             viewModel.requestSignUp(binding.emailTiet.text.toString(),
                 binding.passwordTiet.text.toString())
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
