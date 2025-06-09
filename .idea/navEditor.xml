@@ -13,8 +13,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="534" />
-                            <option name="y" value="-321" />
+                            <option name="x" value="460" />
+                            <option name="y" value="-302" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -43,6 +43,15 @@
                             <option name="y" value="-101" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_newTaskFragment_to_pendingTaskFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -54,6 +63,15 @@
                             <option name="x" value="849" />
                             <option name="y" value="-242" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_pendingTaskFragment_to_newTaskFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

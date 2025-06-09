@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.metask.R
@@ -20,7 +21,6 @@ class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterFragmentBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<RegisterViewModel>()
-    var isValid: Boolean = false
     private lateinit var communicator: FragmentCommunicator
 
     override fun onCreateView(
@@ -30,15 +30,14 @@ class RegisterFragment : Fragment() {
         communicator = requireActivity() as MainActivity
         _binding = FragmentRegisterFragmentBinding.inflate(inflater, container, false)
         setupView()
+        setupObservers()
         return binding.root
     }
 
     private fun setupView() {
+        // Elimina el listener de flecha o úsalo solo para navegar
         binding.flecha.setOnClickListener {
-
-            viewModel.requestSignUp(binding.emailTiet.text.toString(),
-                binding.passwordTiet.text.toString())
-            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+            findNavController().navigateUp() // Solo para regresar
         }
 
         binding.btnRegistrar.setOnClickListener {
@@ -46,35 +45,62 @@ class RegisterFragment : Fragment() {
             val password = binding.passwordTiet.text.toString().trim()
             val name = binding.nameTiet.text.toString().trim()
 
+            // Reset errors
+            binding.nameTiet.error = null
+            binding.emailTil.error = null
+            binding.passwordTil.error = null
+
+            // Validaciones
             if (name.isEmpty()) {
                 binding.nameTiet.error = "El nombre es obligatorio"
                 return@setOnClickListener
             }
 
-            if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            if (email.isEmpty()) {
+                binding.emailTil.error = "El correo es obligatorio"
+                return@setOnClickListener
+            }
+
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 binding.emailTil.error = "Introduce un correo válido"
                 return@setOnClickListener
             }
 
-            if (password.isEmpty() || password.length < 6) {
-                binding.passwordTil.error = "Introduce una contraseña de al menos 6 caracteres"
+            if (password.isEmpty()) {
+                binding.passwordTil.error = "La contraseña es obligatoria"
+                return@setOnClickListener
+            }
+
+            if (password.length < 6) {
+                binding.passwordTil.error = "Mínimo 6 caracteres"
                 return@setOnClickListener
             }
 
             viewModel.requestSignUp(email, password)
-            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-
         }
-
-        setupObservers()
     }
 
     private fun setupObservers() {
-        viewModel.loaderState.observe(viewLifecycleOwner) { loaderState ->
-            communicator.showLoader(loaderState)
+        viewModel.loaderState.observe(viewLifecycleOwner) { isLoading ->
+            communicator.showLoader(isLoading)
+        }
+
+        viewModel.errorState.observe(viewLifecycleOwner) { errorMessage ->
+            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+        }
+
+        // Observador para éxito en registro
+        viewModel.signUpSuccess.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                Toast.makeText(
+                    requireContext(),
+                    "Registro exitoso",
+                    Toast.LENGTH_SHORT
+                ).show()
+                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+            }
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
