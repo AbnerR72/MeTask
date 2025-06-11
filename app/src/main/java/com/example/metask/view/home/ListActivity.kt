@@ -1,4 +1,4 @@
-package com.example.metask.view
+package com.example.metask.view.home
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar

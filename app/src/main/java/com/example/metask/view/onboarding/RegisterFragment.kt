@@ -1,4 +1,4 @@
-package com.example.metask.view
+package com.example.metask.view.onboarding
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.metask.R
 import com.example.metask.databinding.FragmentRegisterFragmentBinding
 import com.example.metask.utils.FragmentCommunicator
+import com.example.metask.view.home.MainActivity
 import com.example.metask.viewModel.RegisterViewModel
 
 /**

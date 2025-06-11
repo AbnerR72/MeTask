@@ -17,6 +17,16 @@ lottie = "4.2.2"
 google-services = "4.4.2"
 firebase = "33.12.0"
 
+retrofitVersion = "2.9.0"
+gson = "2.10.1"
+glideVersion = "4.15.1"
+
+coroutines = "1.6.4"
+safeargs = "2.9.0"
+
+hilt = "2.56.2"
+hilt-plugin = "2.48"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -34,9 +44,21 @@ firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref =
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
 
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
+retrofit-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitVersion"}
+coroutines-play = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }
+
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson"}
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glideVersion" }
+
+hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt"}
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt"}
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-services-plugin = { id = "com.google.gms.google-services", version.ref = "google-services" }
-
+safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "safeargs" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
+kapt = { id = "kotlin-kapt" }
 
