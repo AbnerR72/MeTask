@@ -11,7 +11,7 @@ import javax.inject.Inject
 class TaskRepository @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore
-){
+)  {
     private val taskCollection = firestore.collection("Tasks")
 
     suspend fun createTask(task: Task): ResultWrapper<Void> = safeCall {
