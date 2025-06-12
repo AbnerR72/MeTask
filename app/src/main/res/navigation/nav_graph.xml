@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.metask.view.home.LoginFragment"
+        android:name="com.example.metask.view.onboarding.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -42,5 +42,18 @@
         <action
             android:id="@+id/action_newTaskFragment_to_pendingTaskFragment"
             app:destination="@id/pendingTaskFragment" />
+        <action
+            android:id="@+id/action_newTaskFragment_to_fragmentDetailTask2"
+            app:destination="@id/fragmentDetailTask2" />
     </fragment>
+    <fragment
+        android:id="@+id/fragmentDetailTask2"
+        android:name="com.example.metask.view.home.FragmentDetailTask"
+        android:label="fragment_detail_task"
+        tools:layout="@layout/fragment_detail_task" />
+    <fragment
+        android:id="@+id/itemTaskFragment"
+        android:name="com.example.metask.view.home.ItemTaskFragment"
+        android:label="fragment_item_task"
+        tools:layout="@layout/fragment_item_task" />
 </navigation>
