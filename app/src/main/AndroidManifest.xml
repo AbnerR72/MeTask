@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MeTask"
         tools:targetApi="31">
         <activity
+            android:name=".view.home.FragmentUpdateTask"
+            android:exported="false" />
+        <activity
             android:name=".view.home.UpdateTaskFragment"
             android:exported="false"
             android:theme="@style/Theme.MeTask" />

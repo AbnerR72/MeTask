@@ -50,7 +50,11 @@
         android:id="@+id/fragmentDetailTask2"
         android:name="com.example.metask.view.home.FragmentDetailTask"
         android:label="fragment_detail_task"
-        tools:layout="@layout/fragment_detail_task" />
+        tools:layout="@layout/fragment_detail_task" >
+        <action
+            android:id="@+id/action_fragmentDetailTask2_to_itemTaskFragment"
+            app:destination="@id/itemTaskFragment" />
+    </fragment>
     <fragment
         android:id="@+id/itemTaskFragment"
         android:name="com.example.metask.view.home.ItemTaskFragment"
