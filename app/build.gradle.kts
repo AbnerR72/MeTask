@@ -64,6 +64,15 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
 
+    // Firebase Firestore KTX
+    implementation(libs.firebase.firestore.ktx)
+
+    // RecyclerView
+    implementation(libs.androidx.recyclerview)
+
+    // Firebase UI Firestore
+    implementation(libs.firebase.ui.firestore)
+
     //Retrofit
     implementation(libs.retrofit)
     implementation(libs.gson)

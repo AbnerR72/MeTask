@@ -7,5 +7,4 @@ data class Task (
     val name: String = "",
     val description: String = "",
     val bornDate: Date = Date(),
-    val isCompleted: Boolean = false  // Útil para filtrar pendientes/completadas
 )

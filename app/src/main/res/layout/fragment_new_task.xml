@@ -30,7 +30,7 @@
             android:layout_marginBottom="16dp"
             android:text="Agregar tarea"
             android:textSize="20sp"
-
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iconFlecha"
             app:layout_constraintTop_toTopOf="parent" />

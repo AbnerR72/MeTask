@@ -1,30 +1,31 @@
 package com.example.metask.view.home
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.example.metask.databinding.FragmentNewTaskBinding
-import com.example.metask.utils.FragmentCommunicator
 import com.example.metask.R
 
-
-import com.example.metask.model.Task
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Date
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
+import android.app.DatePickerDialog
 
-class NewTaskFragment : Fragment() {
-    private var _binding: FragmentNewTaskBinding? = null
+import com.example.metask.databinding.FragmentUpdateTaskBinding
+import com.google.android.material.snackbar.Snackbar
+import androidx.navigation.fragment.findNavController
+import java.util.*
+
+
+class UpdateTaskFragment : Fragment() {
+    private var _binding: FragmentUpdateTaskBinding? = null
     private val binding get() = _binding!!
     private lateinit var db: FirebaseFirestore
+    private var taskId: String = ""
     private val calendar = Calendar.getInstance()
 
     override fun onCreateView(
@@ -32,7 +33,7 @@ class NewTaskFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNewTaskBinding.inflate(inflater, container, false)
+        _binding = FragmentUpdateTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -40,20 +41,57 @@ class NewTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         db = FirebaseFirestore.getInstance()
+        taskId = arguments?.getString("taskId") ?: ""
+
+        if (taskId.isEmpty()) {
+            requireActivity().onBackPressed()
+            return
+        }
+
+        loadTaskData()
         setupClickListeners()
     }
 
+    private fun loadTaskData() {
+        db.collection("tasks").document(taskId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    binding.nombreTIK.setText(document.getString("name"))
+                    binding.descriptionTIK.setText(document.getString("description"))
+
+                    val date = document.getDate("bornDate") ?: Date()
+                    calendar.time = date
+
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    binding.FechaTIK.setText(dateFormat.format(date))
+                }
+            }
+    }
+
     private fun setupClickListeners() {
-        binding.iconFlecha.setOnClickListener {
-            findNavController().navigate(R.id.action_newTaskFragment_to_pendingTaskFragment)
+        // Configurar el ícono de flecha
+        binding.iconFlecha2.setOnClickListener {
+            navigateBackToPendingTasks()
         }
 
+        // Configurar el campo de fecha
         binding.FechaTIK.setOnClickListener {
             showDatePicker()
         }
 
+        // Configurar el botón de actualizar
         binding.buttonSecond.setOnClickListener {
-            addTask()
+            updateTask()
+        }
+    }
+
+    private fun navigateBackToPendingTasks() {
+        try {
+            findNavController().navigate(R.id.action_updateTaskFragment_to_pendingTaskFragment)
+        } catch (e: Exception) {
+            // Fallback si hay algún error con Navigation Component
+            requireActivity().onBackPressed()
         }
     }
 
@@ -75,32 +113,32 @@ class NewTaskFragment : Fragment() {
         binding.FechaTIK.setText(dateFormat.format(calendar.time))
     }
 
-    private fun addTask() {
+    private fun updateTask() {
         val name = binding.nombreTIK.text.toString().trim()
         val description = binding.descriptionTIK.text.toString().trim()
         val date = calendar.time
 
         if (name.isEmpty() || description.isEmpty()) {
-            // Mostrar error (puedes usar un Snackbar o Toast)
+            // Mostrar error (puedes usar Snackbar)
             Snackbar.make(binding.root, "Nombre y descripción son requeridos", Snackbar.LENGTH_SHORT).show()
             return
         }
 
-        val task = hashMapOf(
+        val updates = hashMapOf<String, Any>(
             "name" to name,
             "description" to description,
             "bornDate" to date
         )
 
-        db.collection("tasks")
-            .add(task)
+        db.collection("tasks").document(taskId)
+            .update(updates)
             .addOnSuccessListener {
-                // Navegar de regreso a PendingTaskFragment usando Navigation Component
-                findNavController().navigate(R.id.action_newTaskFragment_to_pendingTaskFragment)
+                // Navegar de regreso después de actualizar
+                navigateBackToPendingTasks()
             }
             .addOnFailureListener { e ->
                 // Mostrar error
-                Snackbar.make(binding.root, "Error al agregar tarea: ${e.message}", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.root, "Error al actualizar: ${e.message}", Snackbar.LENGTH_LONG).show()
             }
     }
 

@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_pendingTaskFragment_to_newTaskFragment"
             app:destination="@id/newTaskFragment" />
+        <action
+            android:id="@+id/action_pendingTaskFragment_to_updateTaskFragment"
+            app:destination="@id/updateTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/newTaskFragment"
@@ -42,22 +45,17 @@
         <action
             android:id="@+id/action_newTaskFragment_to_pendingTaskFragment"
             app:destination="@id/pendingTaskFragment" />
-        <action
-            android:id="@+id/action_newTaskFragment_to_fragmentDetailTask2"
-            app:destination="@id/fragmentDetailTask2" />
+
     </fragment>
     <fragment
-        android:id="@+id/fragmentDetailTask2"
-        android:name="com.example.metask.view.home.FragmentDetailTask"
-        android:label="fragment_detail_task"
-        tools:layout="@layout/fragment_detail_task" >
+        android:id="@+id/updateTaskFragment"
+        android:name="com.example.metask.view.home.UpdateTaskFragment"
+        android:label="UpdateTaskFragment" >
         <action
-            android:id="@+id/action_fragmentDetailTask2_to_itemTaskFragment"
-            app:destination="@id/itemTaskFragment" />
+            android:id="@+id/action_updateTaskFragment_to_pendingTaskFragment"
+            app:destination="@id/pendingTaskFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/itemTaskFragment"
-        android:name="com.example.metask.view.home.ItemTaskFragment"
-        android:label="fragment_item_task"
-        tools:layout="@layout/fragment_item_task" />
+    <argument
+        android:name="taskId"
+        app:argType="string" />
 </navigation>

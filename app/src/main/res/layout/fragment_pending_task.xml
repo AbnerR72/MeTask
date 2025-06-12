@@ -47,6 +47,7 @@
                 android:text="Pendientes"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/icon_add"
                 app:layout_constraintStart_toEndOf="@+id/icon_menu"
                 app:layout_constraintTop_toTopOf="parent" />

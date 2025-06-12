@@ -39,8 +39,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1207" />
-                            <option name="y" value="-101" />
+                            <option name="x" value="1172" />
+                            <option name="y" value="-53" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -71,6 +71,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_pendingTaskFragment_to_updateTaskFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -88,6 +93,27 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_registerFragment_to_loginFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="updateTaskFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="1170" />
+                            <option name="y" value="-425" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_updateTaskFragment_to_pendingTaskFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

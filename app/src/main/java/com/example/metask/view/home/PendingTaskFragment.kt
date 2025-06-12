@@ -11,36 +11,97 @@ import com.example.metask.utils.FragmentCommunicator
 import com.example.metask.R
 
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
-class PendingTaskFragment : Fragment() {
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.metask.model.Task
+import com.example.metask.view.home.adapters.TaskAdapter
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import java.util.Date
 
+
+class PendingTaskFragment : Fragment() {
     private var _binding: FragmentPendingTaskBinding? = null
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var communicator: FragmentCommunicator
+    private lateinit var db: FirebaseFirestore
+    private lateinit var taskAdapter: TaskAdapter
+    private var taskListener: ListenerRegistration? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        communicator = requireActivity() as MainActivity
         _binding = FragmentPendingTaskBinding.inflate(inflater, container, false)
-        setupView()
         return binding.root
-
     }
 
-    private fun setupView(){
-        binding.iconAdd.setOnClickListener{
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        db = FirebaseFirestore.getInstance()
+        setupRecyclerView()
+        setupClickListeners()
+        loadTasks()
+    }
+
+    private fun setupRecyclerView() {
+        taskAdapter = TaskAdapter(
+            emptyList(),
+            { taskId -> navigateToUpdateTask(taskId) },
+            { taskId -> deleteTask(taskId) }
+        )
+
+        binding.recycleView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = taskAdapter
+        }
+    }
+
+    private fun setupClickListeners() {
+        binding.iconAdd.setOnClickListener {
             findNavController().navigate(R.id.action_pendingTaskFragment_to_newTaskFragment)
         }
     }
 
+    private fun loadTasks() {
+        taskListener = db.collection("tasks")
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) return@addSnapshotListener
+
+                val tasks = snapshot?.documents?.mapNotNull { doc ->
+                    Task(
+                        id = doc.id,
+                        name = doc.getString("name") ?: "",
+                        description = doc.getString("description") ?: "",
+                        bornDate = doc.getDate("bornDate") ?: Date()
+                    )
+                } ?: emptyList()
+
+                taskAdapter.updateTasks(tasks)
+            }
+    }
+
+    private fun navigateToUpdateTask(taskId: String) {
+        val bundle = Bundle().apply {
+            putString("taskId", taskId)
+        }
+        findNavController().navigate(
+            R.id.action_pendingTaskFragment_to_updateTaskFragment,
+            bundle
+        )
+    }
+
+    private fun deleteTask(taskId: String) {
+        db.collection("tasks").document(taskId)
+            .delete()
+            .addOnFailureListener { e ->
+                // Mostrar error
+            }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        taskListener?.remove()
         _binding = null
     }
 }
