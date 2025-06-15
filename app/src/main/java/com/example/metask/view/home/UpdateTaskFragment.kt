@@ -27,6 +27,8 @@ class UpdateTaskFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
     private var taskId: String = ""
     private val calendar = Calendar.getInstance()
+    private val storageFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()) // Formato para almacenar
+    private val displayFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) // Formato para mostrar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,11 +62,16 @@ class UpdateTaskFragment : Fragment() {
                     binding.nombreTIK.setText(document.getString("name"))
                     binding.descriptionTIK.setText(document.getString("description"))
 
-                    val date = document.getDate("bornDate") ?: Date()
-                    calendar.time = date
-
-                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                    binding.FechaTIK.setText(dateFormat.format(date))
+                    // Manejo de la fecha como String
+                    val dateString = document.getString("date") ?: storageFormat.format(Date())
+                    try {
+                        val date = storageFormat.parse(dateString) ?: Date()
+                        calendar.time = date
+                        binding.FechaTIK.setText(displayFormat.format(date))
+                    } catch (e: Exception) {
+                        calendar.time = Date()
+                        binding.FechaTIK.setText(dateString) // Mostrar el string original si falla el parsing
+                    }
                 }
             }
     }
@@ -109,17 +116,15 @@ class UpdateTaskFragment : Fragment() {
     }
 
     private fun updateDateInView() {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        binding.FechaTIK.setText(dateFormat.format(calendar.time))
+        binding.FechaTIK.setText(displayFormat.format(calendar.time))
     }
 
     private fun updateTask() {
         val name = binding.nombreTIK.text.toString().trim()
         val description = binding.descriptionTIK.text.toString().trim()
-        val date = calendar.time
+        val dateString = storageFormat.format(calendar.time) // Convertimos a String para almacenar
 
         if (name.isEmpty() || description.isEmpty()) {
-            // Mostrar error (puedes usar Snackbar)
             Snackbar.make(binding.root, "Nombre y descripción son requeridos", Snackbar.LENGTH_SHORT).show()
             return
         }
@@ -127,17 +132,15 @@ class UpdateTaskFragment : Fragment() {
         val updates = hashMapOf<String, Any>(
             "name" to name,
             "description" to description,
-            "bornDate" to date
+            "date" to dateString // Guardamos como String
         )
 
         db.collection("tasks").document(taskId)
             .update(updates)
             .addOnSuccessListener {
-                // Navegar de regreso después de actualizar
                 navigateBackToPendingTasks()
             }
             .addOnFailureListener { e ->
-                // Mostrar error
                 Snackbar.make(binding.root, "Error al actualizar: ${e.message}", Snackbar.LENGTH_LONG).show()
             }
     }

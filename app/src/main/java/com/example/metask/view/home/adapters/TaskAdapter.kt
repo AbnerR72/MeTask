@@ -29,8 +29,18 @@ class TaskAdapter (
             nameTextView.text = task.name
             descTextView.text = task.description
 
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            dateTextView.text = dateFormat.format(task.bornDate)
+            // Mostrar directamente la fecha como String
+            dateTextView.text = task.date
+
+            // Opción alternativa si necesitas reformatear la fecha String:
+            try {
+                val originalFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val displayFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val date = originalFormat.parse(task.date)
+                dateTextView.text = displayFormat.format(date)
+            } catch (e: Exception) {
+                dateTextView.text = task.date // Mostrar el original si hay error
+            }
 
             editButton.setOnClickListener { onEditClick(task.id) }
             deleteButton.setOnClickListener { onDeleteClick(task.id) }

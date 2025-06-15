@@ -19,6 +19,7 @@ import java.util.Date
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.UUID
 
 
 class NewTaskFragment : Fragment() {
@@ -26,6 +27,7 @@ class NewTaskFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var db: FirebaseFirestore
     private val calendar = Calendar.getInstance()
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()) // Formato ISO para almacenar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,35 +73,34 @@ class NewTaskFragment : Fragment() {
     }
 
     private fun updateDateInView() {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        binding.FechaTIK.setText(dateFormat.format(calendar.time))
+        val displayFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        binding.FechaTIK.setText(displayFormat.format(calendar.time))
     }
 
     private fun addTask() {
         val name = binding.nombreTIK.text.toString().trim()
         val description = binding.descriptionTIK.text.toString().trim()
-        val date = calendar.time
+        val dateString = dateFormat.format(calendar.time) // Formateamos como String ISO
 
         if (name.isEmpty() || description.isEmpty()) {
-            // Mostrar error (puedes usar un Snackbar o Toast)
             Snackbar.make(binding.root, "Nombre y descripción son requeridos", Snackbar.LENGTH_SHORT).show()
             return
         }
 
         val task = hashMapOf(
+            "id" to UUID.randomUUID().toString(), // Generamos un ID único
             "name" to name,
             "description" to description,
-            "bornDate" to date
+            "date" to dateString // Guardamos como String
         )
 
         db.collection("tasks")
-            .add(task)
+            .document(task["id"] as String) // Usamos el ID como documento
+            .set(task)
             .addOnSuccessListener {
-                // Navegar de regreso a PendingTaskFragment usando Navigation Component
                 findNavController().navigate(R.id.action_newTaskFragment_to_pendingTaskFragment)
             }
             .addOnFailureListener { e ->
-                // Mostrar error
                 Snackbar.make(binding.root, "Error al agregar tarea: ${e.message}", Snackbar.LENGTH_LONG).show()
             }
     }

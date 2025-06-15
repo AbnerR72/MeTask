@@ -1,6 +1,7 @@
 package com.example.metask.view.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -66,15 +67,23 @@ class PendingTaskFragment : Fragment() {
     private fun loadTasks() {
         taskListener = db.collection("tasks")
             .addSnapshotListener { snapshot, error ->
-                if (error != null) return@addSnapshotListener
+                if (error != null) {
+                    Log.e("PendingTaskFragment", "Error al cargar tareas", error)
+                    return@addSnapshotListener
+                }
 
                 val tasks = snapshot?.documents?.mapNotNull { doc ->
-                    Task(
-                        id = doc.id,
-                        name = doc.getString("name") ?: "",
-                        description = doc.getString("description") ?: "",
-                        bornDate = doc.getDate("bornDate") ?: Date()
-                    )
+                    try {
+                        Task(
+                            id = doc.id,
+                            name = doc.getString("name") ?: "",
+                            description = doc.getString("description") ?: "",
+                            date = doc.getString("date") ?: "" // Usamos string en lugar de Date
+                        )
+                    } catch (e: Exception) {
+                        Log.e("PendingTaskFragment", "Error al parsear tarea ${doc.id}", e)
+                        null
+                    }
                 } ?: emptyList()
 
                 taskAdapter.updateTasks(tasks)
