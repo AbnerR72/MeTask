@@ -14,6 +14,7 @@ import java.util.Locale
 
 class TaskAdapter (
     private var tasks: List<Task>,
+    private val onItemClick: (Task) -> Unit,
     private val onEditClick: (String) -> Unit,
     private val onDeleteClick: (String) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
@@ -42,8 +43,19 @@ class TaskAdapter (
                 dateTextView.text = task.date // Mostrar el original si hay error
             }
 
-            editButton.setOnClickListener { onEditClick(task.id) }
-            deleteButton.setOnClickListener { onDeleteClick(task.id) }
+            // Configurar clic en toda la tarjeta
+            itemView.setOnClickListener {
+                onItemClick(task)
+            }
+
+            // Configurar clic en los botones
+            editButton.setOnClickListener {
+                onEditClick(task.id)
+            }
+
+            deleteButton.setOnClickListener {
+                onDeleteClick(task.id)
+            }
         }
     }
 

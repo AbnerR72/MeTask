@@ -48,6 +48,7 @@ class PendingTaskFragment : Fragment() {
     private fun setupRecyclerView() {
         taskAdapter = TaskAdapter(
             emptyList(),
+            { task -> showTaskDetail(task) },
             { taskId -> navigateToUpdateTask(taskId) },
             { taskId -> deleteTask(taskId) }
         )
@@ -56,6 +57,18 @@ class PendingTaskFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = taskAdapter
         }
+    }
+
+    private fun showTaskDetail(task: Task) {
+        val bundle = Bundle().apply {
+            putString("taskName", task.name)
+            putString("taskDescription", task.description)
+            putString("taskDate", task.date)
+        }
+        findNavController().navigate(
+            R.id.action_pendingTaskFragment_to_taskDetailFragment,
+            bundle
+        )
     }
 
     private fun setupClickListeners() {
