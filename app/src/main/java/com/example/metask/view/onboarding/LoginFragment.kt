@@ -15,9 +15,6 @@ import com.example.metask.utils.FragmentCommunicator
 import com.example.metask.view.home.MainActivity
 import com.example.metask.viewModel.LoginViewModel
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginFragmentBinding? = null
@@ -70,7 +67,29 @@ class LoginFragment : Fragment() {
                 isValid = true
             }
         }
+
+        // Configuración del ícono para mostrar u ocultar contraseña
+        binding.passwordTil.setEndIconOnClickListener {
+            togglePasswordVisibility()
+        }
+
         setupObservers()
+    }
+
+    /**
+     * Cambia la visibilidad de la contraseña entre visible y oculta.
+     */
+    private fun togglePasswordVisibility() {
+        val editText = binding.passwordTiet
+        if (editText.inputType == (android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+            // Mostrar la contraseña
+            editText.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+        } else {
+            // Ocultar la contraseña
+            editText.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        // Mueve el cursor al final del texto después de cambiar el tipo de entrada
+        editText.setSelection(editText.text?.length ?: 0)
     }
 
     private fun validateInputs(): Boolean {

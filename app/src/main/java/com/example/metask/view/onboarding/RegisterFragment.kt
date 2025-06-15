@@ -14,9 +14,7 @@ import com.example.metask.utils.FragmentCommunicator
 import com.example.metask.view.home.MainActivity
 import com.example.metask.viewModel.RegisterViewModel
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
+
 class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterFragmentBinding? = null
@@ -36,9 +34,9 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setupView() {
-        // Elimina el listener de flecha o úsalo solo para navegar
+
         binding.flecha.setOnClickListener {
-            findNavController().navigateUp() // Solo para regresar
+            findNavController().navigateUp()
         }
 
         binding.btnRegistrar.setOnClickListener {
